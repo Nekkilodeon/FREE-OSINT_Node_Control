@@ -41,3 +41,15 @@ C:\Users\Nekki\Source\Repos\drake7707\nodecontrol\NodeControlTest\obj\x86\Debug\
 C:\Users\Nekki\Source\Repos\drake7707\nodecontrol\NodeControlTest\obj\x86\Debug\NodeControlTest.csproj.CopyComplete
 C:\Users\Nekki\Source\Repos\drake7707\nodecontrol\NodeControlTest\obj\x86\Debug\NodeControlTest.exe
 C:\Users\Nekki\Source\Repos\drake7707\nodecontrol\NodeControlTest\obj\x86\Debug\NodeControlTest.pdb
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\bin\Debug\NodeControlTest.exe
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\bin\Debug\NodeControlTest.pdb
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\bin\Debug\NodeControl.dll
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\bin\Debug\NodeControl.pdb
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.csprojAssemblyReference.cache
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.Form1.resources
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.Properties.Resources.resources
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.csproj.GenerateResource.cache
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.csproj.CoreCompileInputs.cache
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.csproj.CopyComplete
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.exe
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.pdb

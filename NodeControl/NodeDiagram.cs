@@ -90,10 +90,17 @@ namespace NodeControl
             var node = Nodes.FirstOrDefault();
 
             // determine of all the nodes on which lane (or column) they will be
-            foreach (var n in Nodes)
+            foreach (Node n in Nodes)
             {
-                if (!lanesOfNode.ContainsKey(n))
+                ConditionNode conditionNode = n as ConditionNode;
+                if (conditionNode.Container_color.Equals(Color.Orange))
+                {
                     FillLane(n, lanesOfNode, lanes, currentDepth);
+                }
+                else if (!lanesOfNode.ContainsKey(n))
+                {
+                    FillLane(n, lanesOfNode, lanes, currentDepth + 1);
+                }
             }
 
             if (lanes.Count == 0)

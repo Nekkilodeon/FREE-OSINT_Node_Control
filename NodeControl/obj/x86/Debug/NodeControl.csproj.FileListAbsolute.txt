@@ -48,3 +48,13 @@ C:\Users\Nekki\Source\Repos\drake7707\nodecontrol\NodeControl\obj\x86\Debug\Node
 C:\Users\Nekki\Source\Repos\drake7707\nodecontrol\NodeControl\obj\x86\Debug\NodeControl.csproj.CoreCompileInputs.cache
 C:\Users\Nekki\Source\Repos\drake7707\nodecontrol\NodeControl\obj\x86\Debug\NodeControl.dll
 C:\Users\Nekki\Source\Repos\drake7707\nodecontrol\NodeControl\obj\x86\Debug\NodeControl.pdb
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\bin\Debug\NodeControl.dll
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\bin\Debug\NodeControl.pdb
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.NodeDiagram.resources
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.NodeEditor.TextNodeEditor.resources
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.NodeEditor.ConditionNodeEditor.resources
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.Properties.Resources.resources
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.csproj.GenerateResource.cache
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.csproj.CoreCompileInputs.cache
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.dll
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.pdb
