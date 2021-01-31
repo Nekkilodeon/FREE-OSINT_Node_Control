@@ -22,27 +22,25 @@ namespace NodeControlTest
             d.Dock = DockStyle.Fill;
             pnl.Controls.Add(d);
 
-            var n = new TextNode(d) { Text = "Test" };
+            var n = new ConditionNode(d, Color.Aqua, false) { Text = "Test" };
 
-            var subn = new ConditionNode(d, Color.Aquamarine, false) { Text = "I NEED A LOT OF TEXT TO TEST THE FUNCTIONALITY" };
-            n.LinksTo = subn;
+            var subn = new ConditionNode(d, Color.Orange, true) { Text = "I NEED A LOT OF TEXT TO TEST THE FUNCTIONALITY" };
+            subn.LinksTo.Add(new Condition() { Text = "", LinksTo = n });
 
-            var yesNode = new TextNode(d) { Text = "Alright then", LinksTo = n };
-            subn.LinksTo.Add(new Condition() { Text = "Yes", LinksTo = yesNode });
+            subn.LinksTo.Add(new Condition() { Text = "Yes"});
 
             subn.LinksTo.Add(new Condition() { Text = "Come again? Come again?", LinksTo = subn });
 
-            var noNode = new TextNode(d) { Text = "Your loss", LinksTo = subn };
+            var noNode = new ConditionNode(d, Color.Aqua, false) { Text = "Your loss" };
             subn.LinksTo.Add(new Condition() { Text = "No", LinksTo = noNode });
 
             d.Nodes.Add(n);
             d.Nodes.Add(subn);
-            d.Nodes.Add(yesNode);
             d.Nodes.Add(noNode);
 
             d.Nodes.Add(n);
 
-            var unlinkedNode = new TextNode(d) { Text = "Unlinked " };
+            var unlinkedNode = new ConditionNode(d, Color.Aqua, false) { Text = "Unlinked " };
             d.Nodes.Add(unlinkedNode);
 
             foreach (var node in d.Nodes)

@@ -58,3 +58,4 @@ C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.csproj.CoreCompileInputs.cache
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.dll
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.pdb
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.csprojAssemblyReference.cache

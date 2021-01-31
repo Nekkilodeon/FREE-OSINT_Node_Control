@@ -28,7 +28,7 @@ namespace NodeControl
             Factories = new FactoryCollection(this);
             Factories.Add(new TargetNodeFactory());
             Factories.Add(new SubNodeFactory());
-            Factories.Add(new UnlinkedNodeFactory());
+            //Factories.Add(new UnlinkedNodeFactory());
 
             // default nothing selected 
             SelectedObjects = new HashSet<INodeObject>();
@@ -93,7 +93,7 @@ namespace NodeControl
             foreach (Node n in Nodes)
             {
                 ConditionNode conditionNode = n as ConditionNode;
-                if (conditionNode.Container_color.Equals(Color.Orange))
+                if (conditionNode != null && conditionNode.Container_color.Equals(Color.Orange))
                 {
                     FillLane(n, lanesOfNode, lanes, currentDepth);
                 }
@@ -956,7 +956,7 @@ namespace NodeControl
 
             public enum Operation_Type
             {
-                ADD, EDIT, REMOVE, LINK, DRAG
+                ADD, EDIT, REMOVE, LINK, DRAG, COMPOSE
             }
         }
 
@@ -1010,6 +1010,10 @@ namespace NodeControl
             myMenuItem2.Click += new EventHandler(myMenuItem_Click);
             mnuItemOptions.MenuItems.Add(myMenuItem2);
 
+            MenuItem myMenuItem3 = new MenuItem("Compose Query");
+            myMenuItem3.Click += new EventHandler(myMenuItem_Click);
+            mnuItemOptions.MenuItems.Add(myMenuItem3);
+
             // 
             // NodeDiagram
             // 
@@ -1036,6 +1040,13 @@ namespace NodeControl
                 {
 
                 }
+            }
+            if(((MenuItem)sender).Text == "Compose Query")
+            {
+                DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
+                diagramEventArgs.SelectedObjects = SelectedObjects;
+                diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.COMPOSE;
+                DiagramEvent?.Invoke(this, diagramEventArgs);
             }
         }
 

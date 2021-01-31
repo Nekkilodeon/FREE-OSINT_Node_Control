@@ -38,7 +38,7 @@ namespace NodeControl.Tools
             orgPos = new Point(e.X, e.Y);
 
             var n = diagram.NodeAt(e.X, e.Y);
-            if (n != null && n.CanLink)
+            if (n != null/* && n.CanLink*/)
             {
                 MouseDownInfo = n.GetMouseDownInfo(e);
                 return true;
@@ -66,9 +66,9 @@ namespace NodeControl.Tools
         {
             diagram.Invalidate();
             mousedown = false;
+            //MessageBox.Show("Gottem");
             if (MouseDownInfo != null)
             {
-
                 if (Math.Abs(orgPos.X - e.X) < 10 && Math.Abs(orgPos.Y - e.Y) < 10)
                 {
                     // too close for looping (to prevent accidentially creating loops)
@@ -84,7 +84,7 @@ namespace NodeControl.Tools
                     MouseDownInfo.EndNode = targetNode;
                     return true;
                 }
-                
+
             }
             return false;
         }

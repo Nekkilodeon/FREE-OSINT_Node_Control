@@ -229,8 +229,8 @@ namespace NodeControl.Nodes
                 }
 
             }
-
-            return null;
+            return new ConditionMouseDownInfo() { StartNode = this };
+            //return null;
         }
 
         /// <summary>
@@ -245,6 +245,11 @@ namespace NodeControl.Nodes
             {
                 ConditionMouseDownInfo conditionInfo = (ConditionMouseDownInfo)mouseDownInfo;
                 // check if the condition linked to another node, if so remove the link first
+                if(conditionInfo.Condition == null)
+                {
+                    ((ConditionNode)(conditionInfo.StartNode)).LinksTo.Add(new Condition() { Text = "" });
+                    conditionInfo.Condition = ((ConditionNode)conditionInfo.StartNode).LinksTo.Last();
+                }
                 var oldLink = conditionInfo.Condition.LinksTo;
                 if (oldLink != null)
                     oldLink.ParentNodes.RemoveWithoutRefBack(this);
@@ -296,7 +301,7 @@ namespace NodeControl.Nodes
         }
         public override bool CanBeLinkedTo
         {
-            
+
             get
             {
                 if (this.target)
@@ -429,6 +434,11 @@ namespace NodeControl.Nodes
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return lst.GetEnumerator();
+        }
+
+        public void Add(ConditionNode subn)
+        {
+            throw new NotImplementedException();
         }
     }
 
