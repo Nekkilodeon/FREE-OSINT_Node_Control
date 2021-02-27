@@ -100,13 +100,22 @@ namespace NodeControl.Nodes
 
                 // draw the border (red if selected)
                 if (isSelected)
+                {
                     g.DrawRectangle(Pens.Red, area);
+                    using (var sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                        g.DrawString((Text + ""), f, Brushes.Red, new RectangleF(area.Left, area.Top, area.Width, area.Height), sf);
+                }
                 else
+                {
                     g.DrawRectangle(Pens.Black, area);
+                    using (var sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                        g.DrawString((Text + ""), f, Brushes.Black, new RectangleF(area.Left, area.Top, area.Width, area.Height), sf);
+
+                }
 
                 // draw the text of the node centered
-                using (var sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
-                    g.DrawString((Text + ""), f, Brushes.Black, new RectangleF(area.Left, area.Top, area.Width, area.Height), sf);
+
+                
             }
         }
 

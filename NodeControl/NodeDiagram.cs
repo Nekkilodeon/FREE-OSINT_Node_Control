@@ -23,7 +23,6 @@ namespace NodeControl
         public NodeDiagram()
         {
             InitializeComponent();
-
             // create default factory set
             Factories = new FactoryCollection(this);
             Factories.Add(new TargetNodeFactory());
@@ -35,7 +34,7 @@ namespace NodeControl
 
             Nodes = new HashSet<Node>();
 
-            LineType = LineTypeEnum.Straight;
+            LineType = LineTypeEnum.Bezier;
             Zoom = 1;
 
             GridSize = new System.Drawing.Size(8, 8);
@@ -954,9 +953,11 @@ namespace NodeControl
             public Operation_Type Operation { get; set; }
             public HashSet<INodeObject> SelectedObjects { get; set; }
 
+            public Object operation_attribute;
+
             public enum Operation_Type
             {
-                ADD, EDIT, REMOVE, LINK, DRAG, COMPOSE
+                ADD, EDIT, REMOVE, LINK, DRAG, COMPOSE, COLOR
             }
         }
 
@@ -1006,13 +1007,17 @@ namespace NodeControl
 
             mnuItemOptions = new ContextMenu();
 
-            MenuItem myMenuItem2 = new MenuItem("Remove");
-            myMenuItem2.Click += new EventHandler(myMenuItem_Click);
-            mnuItemOptions.MenuItems.Add(myMenuItem2);
+            MenuItem myMenuItem4 = new MenuItem("Color");
+            myMenuItem4.Click += new EventHandler(myMenuItem_Click);
+            mnuItemOptions.MenuItems.Add(myMenuItem4);
 
             MenuItem myMenuItem3 = new MenuItem("Compose Query");
             myMenuItem3.Click += new EventHandler(myMenuItem_Click);
             mnuItemOptions.MenuItems.Add(myMenuItem3);
+
+            MenuItem myMenuItem2 = new MenuItem("Remove");
+            myMenuItem2.Click += new EventHandler(myMenuItem_Click);
+            mnuItemOptions.MenuItems.Add(myMenuItem2);
 
             // 
             // NodeDiagram
@@ -1041,12 +1046,34 @@ namespace NodeControl
 
                 }
             }
-            if(((MenuItem)sender).Text == "Compose Query")
+            if (((MenuItem)sender).Text == "Compose Query")
             {
                 DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
                 diagramEventArgs.SelectedObjects = SelectedObjects;
                 diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.COMPOSE;
                 DiagramEvent?.Invoke(this, diagramEventArgs);
+            }
+            if (((MenuItem)sender).Text == "Color")
+            {
+                ColorDialog colorDialog = new ColorDialog();
+                var result = colorDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    Color selected_color = colorDialog.Color;
+                    DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
+                    diagramEventArgs.SelectedObjects = SelectedObjects;
+                    foreach (Node node in SelectedObjects)
+                    {
+                        ConditionNode cond_node = node as ConditionNode;
+                        cond_node.Container_color = selected_color;
+                    }
+                    Redraw();
+                    diagramEventArgs.operation_attribute = selected_color;
+                    diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.COLOR;
+                    DiagramEvent?.Invoke(this, diagramEventArgs);
+                }
+
+
             }
         }
 

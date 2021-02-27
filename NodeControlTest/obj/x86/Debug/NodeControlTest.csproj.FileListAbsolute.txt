@@ -53,3 +53,7 @@ C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.csproj.CopyComplete
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.exe
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\obj\x86\Debug\NodeControlTest.pdb
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\bin\Debug\KGySoft.Drawing.dll
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\bin\Debug\KGySoft.CoreLibraries.dll
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\bin\Debug\KGySoft.Drawing.xml
+C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControlTest\bin\Debug\KGySoft.CoreLibraries.xml

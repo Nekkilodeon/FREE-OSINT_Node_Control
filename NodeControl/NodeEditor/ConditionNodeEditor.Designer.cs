@@ -46,7 +46,7 @@
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -59,7 +59,7 @@
             // 
             this.txtText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtText.Location = new System.Drawing.Point(4, 4);
-            this.txtText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtText.Margin = new System.Windows.Forms.Padding(4);
             this.txtText.Multiline = true;
             this.txtText.Name = "txtText";
             this.txtText.Size = new System.Drawing.Size(819, 162);
@@ -69,7 +69,7 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Location = new System.Drawing.Point(723, 348);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(4);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(100, 28);
             this.btnOK.TabIndex = 1;
@@ -82,9 +82,9 @@
             this.groupBox1.Controls.Add(this.txtConditions);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(4, 174);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(819, 162);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
@@ -94,7 +94,7 @@
             // 
             this.txtConditions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConditions.Location = new System.Drawing.Point(4, 19);
-            this.txtConditions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtConditions.Margin = new System.Windows.Forms.Padding(4);
             this.txtConditions.Multiline = true;
             this.txtConditions.Name = "txtConditions";
             this.txtConditions.Size = new System.Drawing.Size(811, 139);
@@ -106,10 +106,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 380);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ConditionNodeEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Condition Node";
+            this.Text = "Node Editor";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);

@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using NodeControl.NodeEditor;
+using KGySoft.Drawing;
 
 namespace NodeControl.Nodes
 {
@@ -107,8 +108,24 @@ namespace NodeControl.Nodes
                 Rectangle topRec = area;
                 topRec.Height /= 2;
                 topRec.Height += 1;
-                using (LinearGradientBrush br = new LinearGradientBrush(topRec, Color.White, Container_color, LinearGradientMode.Vertical))
-                    g.FillRectangle(br, topRec);
+                area = Rectangle.Round(area);
+                if (isSelected)
+                {
+                    //using (LinearGradientBrush br = new LinearGradientBrush(topRec, Color.Red, Color.DarkRed, LinearGradientMode.Vertical))
+                    //  g.FillRectangle(br, topRec);
+                    GraphicsExtensions.FillRoundedRectangle(g, Brushes.Red, area, 10);
+
+                }
+                else
+                {
+                    //using (LinearGradientBrush br = new LinearGradientBrush(topRec, Color.White, Container_color, LinearGradientMode.Vertical))
+                    //  g.FillRectangle(br, topRec);
+                    Brush brush = new SolidBrush(container_color);
+                    
+                    GraphicsExtensions.FillRoundedRectangle(g, brush, area, 10);
+
+                }
+
                 Rectangle bottomRec = topRec;
                 bottomRec.Y += topRec.Size.Height;
                 using (Brush br = new SolidBrush(Color.White))
@@ -116,15 +133,17 @@ namespace NodeControl.Nodes
 
                 // draw the border of the node
                 if (isSelected)
-                    g.DrawRectangle(Pens.Red, area);
+                    // g.DrawRectangle(Pens.Red, area);
+                    GraphicsExtensions.DrawRoundedRectangle(g, Pens.Red, area, 10);
+
                 else
-                    g.DrawRectangle(Pens.Black, area);
+                    GraphicsExtensions.DrawRoundedRectangle(g, Pens.Black, area, 10);
 
                 // draw the node text
                 textAreaRect = area;
                 textAreaRect.Height /= 2;
                 textAreaRect.Y += 2;
-                g.DrawString((Text + ""), font, Brushes.Black, textAreaRect, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                g.DrawString((Text + ""), font, !isSelected ? Brushes.Black : Brushes.White, textAreaRect, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 
 
                 if (LinksTo.Count > 0)
@@ -153,7 +172,7 @@ namespace NodeControl.Nodes
                     foreach (var condition in LinksTo)
                     {
                         RectangleF condRect = new RectangleF(area.Left + area.Width / 2, top, area.Width / 2, cellSize);
-                        g.DrawRectangle(Pens.Black, condRect.X, 1 + condRect.Y, condRect.Width, condRect.Height - 2);
+                        //g.DrawRectangle(Pens.Black, condRect.X, 1 + condRect.Y, condRect.Width, condRect.Height - 2);
                         g.DrawString(condition.Text + "", smallf, Brushes.Black, condRect, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
                         top += cellSize;
                     }
@@ -166,7 +185,7 @@ namespace NodeControl.Nodes
                     foreach (var condition in LinksTo)
                     {
                         RectangleF condRect = new RectangleF(left, area.Top + area.Height / 2, cellSize, area.Height / 2);
-                        g.DrawRectangle(Pens.Black, condRect.X, 1 + condRect.Y, condRect.Width, condRect.Height - 2);
+                        //g.DrawRectangle(Pens.Black, condRect.X, 1 + condRect.Y, condRect.Width, condRect.Height - 2);
                         condRect.Height *= 0.7f;
                         condRect.Y += 5;
                         g.DrawString(condition.Text + "", smallf, Brushes.Black, condRect, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
@@ -175,6 +194,7 @@ namespace NodeControl.Nodes
                 }
             }
         }
+        
 
         /// <summary>
         /// Removes a link to a node
