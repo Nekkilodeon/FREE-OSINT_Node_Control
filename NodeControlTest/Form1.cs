@@ -29,9 +29,9 @@ namespace NodeControlTest
 
             subn.LinksTo.Add(new Condition() { Text = "Yes"});
 
-            subn.LinksTo.Add(new Condition() { Text = "Come again? Come again?", LinksTo = subn });
 
             var noNode = new ConditionNode(d, Color.Aqua, false) { Text = "Your loss" };
+
             subn.LinksTo.Add(new Condition() { Text = "No", LinksTo = noNode });
 
             d.Nodes.Add(n);
@@ -41,14 +41,26 @@ namespace NodeControlTest
             d.Nodes.Add(n);
 
             var unlinkedNode = new ConditionNode(d, Color.Aqua, false) { Text = "Unlinked " };
+            var extraNode = new ConditionNode(d, Color.Aqua, false) { Text = "Row2Ples " };
+            subn.LinksTo.Add(new Condition() { Text = "Come again? Come again?", LinksTo = unlinkedNode });
+            subn.LinksTo.Add(new Condition() { Text = "", LinksTo = extraNode });
+
+            var subn2 = new ConditionNode(d, Color.Orange, true) { Text = "I LITY" };
+            var extraNode2 = new ConditionNode(d, Color.Aqua, false) { Text = "Row2Ples " };
+            subn2.LinksTo.Add(new Condition() { Text = "", LinksTo = extraNode2 });
+
+
             d.Nodes.Add(unlinkedNode);
+            d.Nodes.Add(extraNode);
+            d.Nodes.Add(subn2);
+            d.Nodes.Add(extraNode2);
 
             foreach (var node in d.Nodes)
             {
                 node.Direction = Node.DirectionEnum.Vertical;
             }
 
-            d.AutoLayout(true);
+            //d.AutoLayout(true);
         }
 
         private void rdbBezier_CheckedChanged(object sender, EventArgs e)
@@ -72,7 +84,7 @@ namespace NodeControlTest
 
         private void btnAutoLayout_Click(object sender, EventArgs e)
         {
-            d.AutoLayout(false);
+            d.AutoLayout(false, true);
         }
 
         private void btnSaveImage_Click(object sender, EventArgs e)

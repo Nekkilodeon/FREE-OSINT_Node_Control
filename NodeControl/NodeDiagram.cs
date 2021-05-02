@@ -78,7 +78,7 @@ namespace NodeControl
         /// Layouts the diagram automatically by following each link and placing them from left to right in increased depth
         /// This still doesn't work well (//TODO use a decent orthogonal layout algorithm)
         /// </summary>
-        public void AutoLayout(bool horizontal)
+        public void AutoLayout(bool horizontal, bool comprehensive)
         {
             Dictionary<Node, int> lanesOfNode = new Dictionary<Node, int>();
 
@@ -92,7 +92,7 @@ namespace NodeControl
             foreach (Node n in Nodes)
             {
                 ConditionNode conditionNode = n as ConditionNode;
-                if (conditionNode != null && conditionNode.Container_color.Equals(Color.Orange))
+                if (conditionNode != null && conditionNode.target)
                 {
                     FillLane(n, lanesOfNode, lanes, currentDepth);
                 }
@@ -188,8 +188,6 @@ namespace NodeControl
                             var lines = n.GetLineSegmentsOfLinks(0.25f, 0.5f).ToArray();
                             lineSegments.AddRange(lines);
                         }
-
-
                         int maxWidthOfPair = nodes.Max(n => n.NodeSize.Width);
                         left += (int)(maxWidthOfPair + NodeSize.Width * 0.5f);
                     }
@@ -205,7 +203,7 @@ namespace NodeControl
                     List<Node> nodes = lanes[i];
                     if (nodes != null && nodes.Count > 0)
                     {
-                        int left = 0 + offsetLeft + (totalWidth / nodes.Count) / 2;
+                        int left = 0 + offsetLeft;
 
                         foreach (var n in nodes)
                         {
@@ -219,54 +217,107 @@ namespace NodeControl
                         top += (int)(maxHeightOfPair + NodeSize.Height * 0.5f);
                     }
                 }
-
-
                 // do a second pass to determine if links from previous nodes would intersect with the current lane, and if so
                 // move the node either left or right, depending on its index on the lane it's on.
                 top = offsetTop;
                 List<KeyValuePair<Point, Point>> lineSegments = new List<KeyValuePair<Point, Point>>();
 
+                /*                for (int i = 0; i < lanes.Count; i++)
+                                {
+                                    List<Node> nodes = lanes[i];
+                                    if (nodes != null && nodes.Count > 0)
+                                    {
+                                        int left = 0 + offsetLeft + (totalHeight / nodes.Count) / 2;
+
+                                        // move the node up or down if any of the line segments intersect with the node
+                                        foreach (var n in nodes)
+                                        {
+
+
+                                            var linesOfNode = n.GetLineSegmentsOfLinks(0.25f, 0.5f).ToArray();
+
+
+                                            int retry = 0;
+
+                                            while (lineSegments.Concat(linesOfNode).Where(l => n.Area.IntersectsWithLine(l.Key.X, l.Key.Y, l.Value.X, l.Value.Y)).Any() && retry < 5)
+                                            {
+                                                var blockingLinesegment = lineSegments.Concat(linesOfNode).Where(l => n.Area.IntersectsWithLine(l.Key.X, l.Key.Y, l.Value.X, l.Value.Y)).FirstOrDefault();
+                                                if (nodes.IndexOf(n) < nodes.Count / 2)
+                                                    left -= (int)(NodeSize.Width);
+                                                else
+                                                    left += (int)(NodeSize.Width);
+                                                n.Position = new Point(left, top);
+                                            }
+                                            left += (int)(n.NodeSize.Width + n.NodeSize.Width * 0.5f);
+                                            retry++;
+                                        }
+
+                                        foreach (var n in nodes)
+                                        {
+                                            var lines = n.GetLineSegmentsOfLinks(0.25f, 0.5f).ToArray();
+                                            lineSegments.AddRange(lines);
+                                        }
+
+
+                                        int maxHeightOfPair = nodes.Max(n => n.NodeSize.Height);
+                                        top += (int)(maxHeightOfPair + NodeSize.Height * 0.5f);
+                                    }
+                                }
+                */
                 for (int i = 0; i < lanes.Count; i++)
                 {
                     List<Node> nodes = lanes[i];
                     if (nodes != null && nodes.Count > 0)
                     {
-                        int left = 0 + offsetLeft + (totalHeight / nodes.Count) / 2;
-
-                        // move the node up or down if any of the line segments intersect with the node
                         foreach (var n in nodes)
                         {
-
-
-                            var linesOfNode = n.GetLineSegmentsOfLinks(0.25f, 0.5f).ToArray();
-
-
-                            int retry = 0;
-
-                            while (lineSegments.Concat(linesOfNode).Where(l => n.Area.IntersectsWithLine(l.Key.X, l.Key.Y, l.Value.X, l.Value.Y)).Any() && retry < 5)
+                            ConditionNode cnd = n as ConditionNode;
+                            if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo != null)
                             {
-                                var blockingLinesegment = lineSegments.Concat(linesOfNode).Where(l => n.Area.IntersectsWithLine(l.Key.X, l.Key.Y, l.Value.X, l.Value.Y)).FirstOrDefault();
-                                if (nodes.IndexOf(n) < nodes.Count / 2)
-                                    left -= (int)(NodeSize.Width);
+                                int x = cnd.LinksTo[0].LinksTo.Position.X;
+                                if (cnd.LinksTo.Count < this.SubsPerLine)
+                                {
+                                    int x2 = cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo.Position.X;
+                                    x = (x + x2) / 2;
+                                }
                                 else
-                                    left += (int)(NodeSize.Width);
-                                n.Position = new Point(left, top);
+                                {
+                                    int x2 = cnd.LinksTo[SubsPerLine - 1].LinksTo.Position.X;
+                                    x = (x + x2) / 2;
+                                }
+                                n.Position = new Point()
+                                {
+                                    X = x,
+                                    Y = n.Position.Y
+                                };
                             }
-                            left += (int)(n.NodeSize.Width + n.NodeSize.Width * 0.5f);
-                            retry++;
                         }
-
-                        foreach (var n in nodes)
-                        {
-                            var lines = n.GetLineSegmentsOfLinks(0.25f, 0.5f).ToArray();
-                            lineSegments.AddRange(lines);
-                        }
-
-
-                        int maxHeightOfPair = nodes.Max(n => n.NodeSize.Height);
-                        top += (int)(maxHeightOfPair + NodeSize.Height * 0.5f);
                     }
                 }
+                foreach (var n in lanes[0])
+                {
+                    ConditionNode cnd = n as ConditionNode;
+                    if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo != null)
+                    {
+                        int x = cnd.LinksTo[0].LinksTo.Position.X;
+                        if (cnd.LinksTo.Count < this.SubsPerLine)
+                        {
+                            int x2 = cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo.Position.X;
+                            x = (x + x2) / 2;
+                        }
+                        else
+                        {
+                            int x2 = cnd.LinksTo[SubsPerLine - 1].LinksTo.Position.X;
+                            x = (x + x2) / 2;
+                        }
+                        n.Position = new Point()
+                        {
+                            X = x,
+                            Y = n.Position.Y
+                        };
+                    }
+                }
+
             }
 
             // ensure that all container nodes are updated to fit their content that was moved
@@ -297,8 +348,19 @@ namespace NodeControl
                     lane.Add(n);
                     lanesOfNode.Add(n, currentDepth);
 
+                    int count_per_line = 0;
+                    int next_depth = currentDepth + 1;
+                    int limit = SubsPerLine;
                     foreach (var subn in n.GetLinkedNodes())
-                        FillLane(subn, lanesOfNode, lanes, currentDepth + 1);
+                    {
+                        count_per_line++;
+                        FillLane(subn, lanesOfNode, lanes, next_depth);
+                        if (count_per_line == limit)
+                        {
+                            next_depth++;
+                            count_per_line = 0;
+                        }
+                    }
                 }
             }
         }
@@ -970,6 +1032,9 @@ namespace NodeControl
         /// Determines the way links should be drawn
         /// </summary>
         public LineTypeEnum LineType { get; set; }
+        public bool PerformanceMode { get; set; } = false;
+        public bool Alternative { get; set; } = true;
+        public int SubsPerLine { get; set; } = 5;
 
         /// <summary>
         /// Draw the entire diagram to a bitmap and return it

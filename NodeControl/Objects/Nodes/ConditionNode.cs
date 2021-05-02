@@ -36,7 +36,7 @@ namespace NodeControl.Nodes
             {
                 if (LinksTo.Count == 0)
                     return base.NodeSize;
-
+/*
                 // ensure there is enough room for the conditions
                 if (Direction == DirectionEnum.Horizontal)
                 {
@@ -53,7 +53,7 @@ namespace NodeControl.Nodes
                         int width = 15 * LinksTo.Count;
                         return new Size(width, base.NodeSize.Height);
                     }
-                }
+                }*/
 
                 return base.NodeSize;
             }
@@ -66,7 +66,7 @@ namespace NodeControl.Nodes
         public Color Container_color { get => container_color; set => container_color = value; }
 
         private Color container_color;
-        private bool target;
+        public bool target = false;
 
         /// <summary>
         /// Returns all the linked nodes
@@ -113,31 +113,47 @@ namespace NodeControl.Nodes
                 {
                     //using (LinearGradientBrush br = new LinearGradientBrush(topRec, Color.Red, Color.DarkRed, LinearGradientMode.Vertical))
                     //  g.FillRectangle(br, topRec);
-                    GraphicsExtensions.FillRoundedRectangle(g, Brushes.Red, area, 10);
-
+                    if (!parent.PerformanceMode)
+                        GraphicsExtensions.FillRoundedRectangle(g, Brushes.Red, area, 10);
+                    else
+                        g.FillRectangle(Brushes.Red, area);
                 }
                 else
                 {
                     //using (LinearGradientBrush br = new LinearGradientBrush(topRec, Color.White, Container_color, LinearGradientMode.Vertical))
                     //  g.FillRectangle(br, topRec);
                     Brush brush = new SolidBrush(container_color);
-                    
-                    GraphicsExtensions.FillRoundedRectangle(g, brush, area, 10);
-
+                    if (!parent.PerformanceMode)
+                        GraphicsExtensions.FillRoundedRectangle(g, brush, area, 10);
+                    else
+                        g.FillRectangle(brush, area);
                 }
 
                 Rectangle bottomRec = topRec;
                 bottomRec.Y += topRec.Size.Height;
-                using (Brush br = new SolidBrush(Color.White))
-                    g.FillRectangle(br, bottomRec);
+                if (!parent.PerformanceMode)
+                    using (Brush br = new SolidBrush(Color.White))
+                        g.FillRectangle(br, bottomRec);
 
                 // draw the border of the node
+
                 if (isSelected)
-                    // g.DrawRectangle(Pens.Red, area);
-                    GraphicsExtensions.DrawRoundedRectangle(g, Pens.Red, area, 10);
+                {
+                    if (parent.PerformanceMode)
+                        g.DrawRectangle(Pens.Red, area);
+                    else
+                        GraphicsExtensions.DrawRoundedRectangle(g, Pens.Red, area, 10);
+                }
+                // g.DrawRectangle(Pens.Red, area);
 
                 else
-                    GraphicsExtensions.DrawRoundedRectangle(g, Pens.Black, area, 10);
+                {
+                    if (parent.PerformanceMode)
+                        g.DrawRectangle(Pens.Black, area);
+                    else
+                        GraphicsExtensions.DrawRoundedRectangle(g, Pens.Black, area, 10);
+
+                }
 
                 // draw the node text
                 textAreaRect = area;
@@ -146,7 +162,7 @@ namespace NodeControl.Nodes
                 g.DrawString((Text + ""), font, !isSelected ? Brushes.Black : Brushes.White, textAreaRect, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 
 
-                if (LinksTo.Count > 0)
+                if (LinksTo.Count > 0 && !parent.PerformanceMode)
                 {
                     DrawConditions(g, font, area);
                 }
@@ -194,7 +210,7 @@ namespace NodeControl.Nodes
                 }
             }
         }
-        
+
 
         /// <summary>
         /// Removes a link to a node
@@ -265,7 +281,7 @@ namespace NodeControl.Nodes
             {
                 ConditionMouseDownInfo conditionInfo = (ConditionMouseDownInfo)mouseDownInfo;
                 // check if the condition linked to another node, if so remove the link first
-                if(conditionInfo.Condition == null)
+                if (conditionInfo.Condition == null)
                 {
                     ((ConditionNode)(conditionInfo.StartNode)).LinksTo.Add(new Condition() { Text = "" });
                     conditionInfo.Condition = ((ConditionNode)conditionInfo.StartNode).LinksTo.Last();

@@ -114,8 +114,6 @@ namespace NodeControl.Nodes
                 }
 
                 // draw the text of the node centered
-
-                
             }
         }
 
@@ -479,7 +477,10 @@ namespace NodeControl.Nodes
             else
             {
                 int xOffset = (int)((index / (float)nrOfNodes) * area.Width) + (area.Width / nrOfNodes) / 2;
-
+                if (parent.Alternative)
+                {
+                    xOffset = area.Width / 2;
+                }
                 source = new Point(area.Left + xOffset, area.Bottom);
                 int destXOffset = (int)((parentNodesOfTargetNode.IndexOf(this) / (float)parentNodesOfTargetNode.Count) * subnArea.Width) + (subnArea.Width / parentNodesOfTargetNode.Count) / 2;
                 dest = new Point(subnArea.Left + destXOffset, subnArea.Top);

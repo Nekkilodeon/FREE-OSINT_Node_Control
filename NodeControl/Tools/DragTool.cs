@@ -285,7 +285,7 @@ namespace NodeControl.Tools
                                 g.DrawLine(Pens.LimeGreen, new Point(0, closestYArea.Bottom), new Point(diagram.Width, closestYArea.Bottom));
                         }
                     }
-                    catch (NullReferenceException e)
+                    catch (System.NullReferenceException e)
                     {
 
                     }
