@@ -791,13 +791,20 @@ namespace NodeControl
                 {
                     DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
                     DragTool dragTool = activeTool as DragTool;
-                    diagramEventArgs.SelectedObjects = new HashSet<INodeObject>();
-                    foreach (Node node in dragTool.selectedObjectsPositions.Keys)
+                    if (dragTool.selectedObjectsPositions.Count > 0)
                     {
-                        diagramEventArgs.SelectedObjects.Add(node);
+                        diagramEventArgs.SelectedObjects = new HashSet<INodeObject>();
+                        foreach (Node node in dragTool.selectedObjectsPositions.Keys)
+                        {
+                            if (!node.Position.Equals(dragTool.selectedObjectsPositions[node]))
+                                diagramEventArgs.SelectedObjects.Add(node);
+                        }
+                        if (diagramEventArgs.SelectedObjects.Count > 0)
+                        {
+                            diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.DRAG;
+                            DiagramEvent?.Invoke(this, diagramEventArgs);
+                        }
                     }
-                    diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.DRAG;
-                    DiagramEvent?.Invoke(this, diagramEventArgs);
                 }
             }
             UpdateBoundingBox();
@@ -1019,7 +1026,7 @@ namespace NodeControl
 
             public enum Operation_Type
             {
-                ADD, EDIT, REMOVE, LINK, DRAG, COMPOSE, COLOR
+                ADD, EDIT, REMOVE, LINK, DRAG, COMPOSE, COLOR, OPEN_URL
             }
         }
 
@@ -1076,9 +1083,13 @@ namespace NodeControl
             myMenuItem4.Click += new EventHandler(myMenuItem_Click);
             mnuItemOptions.MenuItems.Add(myMenuItem4);
 
-            MenuItem myMenuItem3 = new MenuItem("Compose Query");
+            MenuItem myMenuItem3 = new MenuItem("Compose");
             myMenuItem3.Click += new EventHandler(myMenuItem_Click);
             mnuItemOptions.MenuItems.Add(myMenuItem3);
+
+            MenuItem myMenuItem5 = new MenuItem("Open in Chromium");
+            myMenuItem5.Click += new EventHandler(myMenuItem_Click);
+            mnuItemOptions.MenuItems.Add(myMenuItem5);
 
             MenuItem myMenuItem2 = new MenuItem("Remove");
             myMenuItem2.Click += new EventHandler(myMenuItem_Click);
@@ -1111,14 +1122,14 @@ namespace NodeControl
 
                 }
             }
-            if (((MenuItem)sender).Text == "Compose Query")
+            else if (((MenuItem)sender).Text == "Compose")
             {
                 DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
                 diagramEventArgs.SelectedObjects = SelectedObjects;
                 diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.COMPOSE;
                 DiagramEvent?.Invoke(this, diagramEventArgs);
             }
-            if (((MenuItem)sender).Text == "Color")
+            else if (((MenuItem)sender).Text == "Color")
             {
                 ColorDialog colorDialog = new ColorDialog();
                 var result = colorDialog.ShowDialog();
@@ -1137,8 +1148,13 @@ namespace NodeControl
                     diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.COLOR;
                     DiagramEvent?.Invoke(this, diagramEventArgs);
                 }
-
-
+            }
+            else if (((MenuItem)sender).Text == "Open in Chromium")
+            {
+                DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
+                diagramEventArgs.SelectedObjects = SelectedObjects;
+                diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.OPEN_URL;
+                DiagramEvent?.Invoke(this, diagramEventArgs);
             }
         }
 
