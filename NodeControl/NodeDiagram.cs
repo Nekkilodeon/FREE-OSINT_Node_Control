@@ -923,6 +923,49 @@ namespace NodeControl
                 {
 
                 }
+            }else if (e.KeyCode == Keys.Q)
+            {
+                if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                {
+                    //Query Compose
+                    DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
+                    diagramEventArgs.SelectedObjects = SelectedObjects;
+                    diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.COMPOSE;
+                    DiagramEvent?.Invoke(this, diagramEventArgs);
+                }
+            }else if (e.KeyCode == Keys.W)
+            {
+                if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                {
+                    //Browser
+                    DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
+                    diagramEventArgs.SelectedObjects = SelectedObjects;
+                    diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.OPEN_URL;
+                    DiagramEvent?.Invoke(this, diagramEventArgs);
+                }
+            }else if (e.KeyCode == Keys.E)
+            {
+                if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                {
+                    //Color
+                    ColorDialog colorDialog = new ColorDialog();
+                    var result = colorDialog.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        Color selected_color = colorDialog.Color;
+                        DiagramEventArgs diagramEventArgs = new DiagramEventArgs();
+                        diagramEventArgs.SelectedObjects = SelectedObjects;
+                        foreach (Node node in SelectedObjects)
+                        {
+                            ConditionNode cond_node = node as ConditionNode;
+                            cond_node.Container_color = selected_color;
+                        }
+                        Redraw();
+                        diagramEventArgs.operation_attribute = selected_color;
+                        diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.COLOR;
+                        DiagramEvent?.Invoke(this, diagramEventArgs);
+                    }
+                }
             }
             else
             {
@@ -1081,18 +1124,23 @@ namespace NodeControl
 
             MenuItem myMenuItem4 = new MenuItem("Color");
             myMenuItem4.Click += new EventHandler(myMenuItem_Click);
+            myMenuItem4.Shortcut = Shortcut.CtrlE;
             mnuItemOptions.MenuItems.Add(myMenuItem4);
 
             MenuItem myMenuItem3 = new MenuItem("Compose");
             myMenuItem3.Click += new EventHandler(myMenuItem_Click);
+            myMenuItem3.Shortcut = Shortcut.CtrlQ;
+
             mnuItemOptions.MenuItems.Add(myMenuItem3);
 
             MenuItem myMenuItem5 = new MenuItem("Open in Chromium");
             myMenuItem5.Click += new EventHandler(myMenuItem_Click);
+            myMenuItem5.Shortcut = Shortcut.CtrlW;
             mnuItemOptions.MenuItems.Add(myMenuItem5);
 
             MenuItem myMenuItem2 = new MenuItem("Remove");
             myMenuItem2.Click += new EventHandler(myMenuItem_Click);
+            myMenuItem2.Shortcut = Shortcut.Del;
             mnuItemOptions.MenuItems.Add(myMenuItem2);
 
             // 
