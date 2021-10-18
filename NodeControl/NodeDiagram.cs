@@ -291,13 +291,21 @@ namespace NodeControl
                                 int x = cnd.LinksTo[0].LinksTo.Position.X;
                                 if (cnd.LinksTo.Count < this.SubsPerLine)
                                 {
-                                    int x2 = cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo.Position.X;
-                                    x = (x + x2) / 2;
+                                    if (cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo != null)
+                                    {
+                                        int x2 = cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo.Position.X;
+                                        x = (x + x2) / 2;
+
+                                    }
+
                                 }
                                 else
                                 {
-                                    int x2 = cnd.LinksTo[SubsPerLine - 1].LinksTo.Position.X;
-                                    x = (x + x2) / 2;
+                                    if (cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo != null)
+                                    {
+                                        int x2 = cnd.LinksTo[SubsPerLine - 1].LinksTo.Position.X;
+                                        x = (x + x2) / 2;
+                                    }
                                 }
                                 n.Position = new Point()
                                 {
