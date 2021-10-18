@@ -194,7 +194,7 @@ namespace NodeControl.Nodes
         /// <param name="fnt">The font to use</param>
         /// <param name="viewportRect">The viewport bounds</param>
         /// <param name="selectedLinks">The links that are selected in the diagram</param>
-        internal virtual void DrawLinks(Graphics g, Font fnt, Rectangle viewportRect, IEnumerable<Link> selectedLinks)
+        internal virtual void DrawLinks(Graphics g, Font fnt, Rectangle viewportRect, IEnumerable<Link> selectedLinks, IEnumerable<Node> selectedNodes)
         {
             Rectangle area = Area;
             // make a hashset for the selected links to look up
@@ -214,6 +214,8 @@ namespace NodeControl.Nodes
 
                     Link curLink = new Link(this, subn, index); // struct, so it's by contents not by reference!
                     bool isSelected = selectedLnks.Contains(curLink);
+                    if (isSelected == false)
+                        isSelected = selectedNodes.Contains(curLink.To);
                     // draw the link
                     DrawLinkTo(subn, g, fnt, viewportRect, source, dest, isSelected);
                 }

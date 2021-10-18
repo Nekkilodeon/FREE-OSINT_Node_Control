@@ -204,13 +204,26 @@ namespace NodeControl
                     if (nodes != null && nodes.Count > 0)
                     {
                         int left = 0 + offsetLeft;
-
+                        Node previousParent = null;
                         foreach (var n in nodes)
                         {
-                            left += this.NodeSize.Width / 2 - n.NodeSize.Width / 2;
-                            n.Position = new Point(left, top);
-                            left += (int)(n.NodeSize.Width + n.NodeSize.Width * 0.5f);
-
+                            if (nodes.IndexOf(n) > 0 && lanes[i - 1].Count >= nodes.Count && ((ConditionNode)n).ParentNodes.FirstOrDefault() != null/* && !((ConditionNode)n).ParentNodes.FirstOrDefault().Equals(previousParent)*/)
+                            {
+                                ConditionCollection children = ((ConditionNode)n.ParentNodes.FirstOrDefault()).LinksTo;
+                                int topchild_idx = indexOfNodeCollection(children, n) - SubsPerLine;
+                                if (topchild_idx >= 0)
+                                {
+                                    int x = children[topchild_idx].LinksTo.Position.X;
+                                    n.Position = new Point(x, top);
+                                }
+                            }
+                            else
+                            {
+                                left += this.NodeSize.Width / 2 - n.NodeSize.Width / 2;
+                                n.Position = new Point(left, top);
+                                left += (int)(n.NodeSize.Width + n.NodeSize.Width * 0.5f);
+                            }
+                            previousParent = n.ParentNodes.FirstOrDefault();
                         }
 
                         int maxHeightOfPair = nodes.Max(n => n.NodeSize.Height);
@@ -264,6 +277,7 @@ namespace NodeControl
                                     }
                                 }
                 */
+                ConditionNode lastComplexNode = null;
                 for (int i = 0; i < lanes.Count; i++)
                 {
                     List<Node> nodes = lanes[i];
@@ -290,14 +304,35 @@ namespace NodeControl
                                     X = x,
                                     Y = n.Position.Y
                                 };
+                                if (i == 1)
+                                    lastComplexNode = cnd;
+
                             }
+                        }
+
+                    }
+                }
+                if (lastComplexNode != null)
+                {
+                    int lastX = lastComplexNode.Position.X;
+                    foreach (var n in lanes[1])
+                    {
+                        if (!hasChildrenNodes((ConditionNode)n))
+                        {
+                            n.Position = new Point()
+                            {
+                                X = lastX + (int)(n.NodeSize.Width + n.NodeSize.Width * 0.5f),
+                                Y = n.Position.Y
+                            };
+                            lastX = n.Position.X;
                         }
                     }
                 }
+
                 foreach (var n in lanes[0])
                 {
                     ConditionNode cnd = n as ConditionNode;
-                    if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo != null)
+                    if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo != null && ((ConditionNode)cnd.LinksTo[0].LinksTo).LinksTo.Count > 0)
                     {
                         int x = cnd.LinksTo[0].LinksTo.Position.X;
                         if (cnd.LinksTo.Count < this.SubsPerLine)
@@ -318,6 +353,20 @@ namespace NodeControl
                     }
                 }
 
+
+
+                /*foreach (var n in lanes[0])
+                {
+                    ConditionNode cnd = n as ConditionNode;
+                    if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo == null)
+                    {
+                        var left = max_x;
+                        //left += this.NodeSize.Width / 2 - n.NodeSize.Width / 2;
+                        n.Position = new Point(left, max_y);
+                        max_y = left;
+                    }
+                }*/
+
             }
 
             // ensure that all container nodes are updated to fit their content that was moved
@@ -325,6 +374,18 @@ namespace NodeControl
                 cn.UpdateBounds();
 
             Redraw();
+        }
+
+        private bool hasChildrenNodes(ConditionNode node)
+        {
+            if (node.LinksTo.Count > 0)
+                foreach (Condition condition in node.LinksTo)
+                {
+                    if (condition.LinksTo != null)
+                        return true;
+                }
+
+            return false;
         }
 
         /// <summary>
@@ -363,6 +424,16 @@ namespace NodeControl
                     }
                 }
             }
+        }
+
+        private int indexOfNodeCollection(ConditionCollection conditions, Node node)
+        {
+            foreach (Condition sub in conditions)
+            {
+                if (sub.LinksTo != null && sub.LinksTo.Equals(node))
+                    return conditions.IndexOf(sub);
+            }
+            return -1;
         }
 
         /// <summary>
@@ -551,7 +622,7 @@ namespace NodeControl
         private void DrawLinksOfNode(Node n, Graphics g, Rectangle viewportRect)
         {
             // draw all attached links
-            n.DrawLinks(g, Font, viewportRect, SelectedObjects.OfType<Link>());
+            n.DrawLinks(g, Font, viewportRect, SelectedObjects.OfType<Link>(), SelectedObjects.OfType<Node>());
         }
 
         /// <summary>
@@ -923,7 +994,8 @@ namespace NodeControl
                 {
 
                 }
-            }else if (e.KeyCode == Keys.Q)
+            }
+            else if (e.KeyCode == Keys.Q)
             {
                 if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
                 {
@@ -933,7 +1005,8 @@ namespace NodeControl
                     diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.COMPOSE;
                     DiagramEvent?.Invoke(this, diagramEventArgs);
                 }
-            }else if (e.KeyCode == Keys.W)
+            }
+            else if (e.KeyCode == Keys.W)
             {
                 if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
                 {
@@ -943,7 +1016,8 @@ namespace NodeControl
                     diagramEventArgs.Operation = DiagramEventArgs.Operation_Type.OPEN_URL;
                     DiagramEvent?.Invoke(this, diagramEventArgs);
                 }
-            }else if (e.KeyCode == Keys.E)
+            }
+            else if (e.KeyCode == Keys.E)
             {
                 if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
                 {
