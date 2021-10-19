@@ -207,7 +207,7 @@ namespace NodeControl
                         Node previousParent = null;
                         foreach (var n in nodes)
                         {
-                            if (nodes.IndexOf(n) > 0 && lanes[i - 1].Count >= nodes.Count && ((ConditionNode)n).ParentNodes.Count > 0 && ((ConditionNode)n).ParentNodes.FirstOrDefault() != null/* && !((ConditionNode)n).ParentNodes.FirstOrDefault().Equals(previousParent)*/)
+                            if (nodes.IndexOf(n) > 0 && i > 0 && lanes[i - 1].Count >= nodes.Count && ((ConditionNode)n).ParentNodes.Count > 0 && ((ConditionNode)n).ParentNodes.FirstOrDefault() != null/* && !((ConditionNode)n).ParentNodes.FirstOrDefault().Equals(previousParent)*/)
                             {
                                 ConditionCollection children = ((ConditionNode)n.ParentNodes.FirstOrDefault()).LinksTo;
                                 int topchild_idx = indexOfNodeCollection(children, n) - SubsPerLine;

@@ -63,4 +63,3 @@ C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\bin\
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\bin\Debug\KGySoft.CoreLibraries.xml
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\bin\Debug\KGySoft.Drawing.xml
 C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.csproj.CopyComplete
-C:\Users\Nekki\source\repos\Nekkilodeon\FREE-OSINT_Node_Control\NodeControl\obj\x86\Debug\NodeControl.csprojAssemblyReference.cache
