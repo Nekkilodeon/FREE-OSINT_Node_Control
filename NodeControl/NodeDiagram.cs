@@ -277,87 +277,90 @@ namespace NodeControl
                                     }
                                 }
                 */
-                ConditionNode lastComplexNode = null;
-                for (int i = 0; i < lanes.Count; i++)
+                if (comprehensive)
                 {
-                    List<Node> nodes = lanes[i];
-                    if (nodes != null && nodes.Count > 0)
+                    ConditionNode lastComplexNode = null;
+                    for (int i = 0; i < lanes.Count; i++)
                     {
-                        foreach (var n in nodes)
+                        List<Node> nodes = lanes[i];
+                        if (nodes != null && nodes.Count > 0)
                         {
-                            ConditionNode cnd = n as ConditionNode;
-                            if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo != null)
+                            foreach (var n in nodes)
                             {
-                                int x = cnd.LinksTo[0].LinksTo.Position.X;
-                                if (cnd.LinksTo.Count < this.SubsPerLine)
+                                ConditionNode cnd = n as ConditionNode;
+                                if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo != null)
                                 {
-                                    if (cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo != null)
+                                    int x = cnd.LinksTo[0].LinksTo.Position.X;
+                                    if (cnd.LinksTo.Count < this.SubsPerLine)
                                     {
-                                        int x2 = cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo.Position.X;
-                                        x = (x + x2) / 2;
+                                        if (cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo != null)
+                                        {
+                                            int x2 = cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo.Position.X;
+                                            x = (x + x2) / 2;
+
+                                        }
 
                                     }
+                                    else
+                                    {
+                                        if (cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo != null)
+                                        {
+                                            int x2 = cnd.LinksTo[SubsPerLine - 1].LinksTo.Position.X;
+                                            x = (x + x2) / 2;
+                                        }
+                                    }
+                                    n.Position = new Point()
+                                    {
+                                        X = x,
+                                        Y = n.Position.Y
+                                    };
+                                    if (i == 1)
+                                        lastComplexNode = cnd;
 
                                 }
-                                else
-                                {
-                                    if (cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo != null)
-                                    {
-                                        int x2 = cnd.LinksTo[SubsPerLine - 1].LinksTo.Position.X;
-                                        x = (x + x2) / 2;
-                                    }
-                                }
+                            }
+
+                        }
+                    }
+                    if (lastComplexNode != null)
+                    {
+                        int lastX = lastComplexNode.Position.X;
+                        foreach (var n in lanes[1])
+                        {
+                            if (!hasChildrenNodes((ConditionNode)n))
+                            {
                                 n.Position = new Point()
                                 {
-                                    X = x,
+                                    X = lastX + (int)(n.NodeSize.Width + n.NodeSize.Width * 0.5f),
                                     Y = n.Position.Y
                                 };
-                                if (i == 1)
-                                    lastComplexNode = cnd;
-
+                                lastX = n.Position.X;
                             }
                         }
-
                     }
-                }
-                if (lastComplexNode != null)
-                {
-                    int lastX = lastComplexNode.Position.X;
-                    foreach (var n in lanes[1])
+
+                    foreach (var n in lanes[0])
                     {
-                        if (!hasChildrenNodes((ConditionNode)n))
+                        ConditionNode cnd = n as ConditionNode;
+                        if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo != null && ((ConditionNode)cnd.LinksTo[0].LinksTo).LinksTo.Count > 0)
                         {
+                            int x = cnd.LinksTo[0].LinksTo.Position.X;
+                            if (cnd.LinksTo.Count < this.SubsPerLine)
+                            {
+                                int x2 = cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo.Position.X;
+                                x = (x + x2) / 2;
+                            }
+                            else
+                            {
+                                int x2 = cnd.LinksTo[SubsPerLine - 1].LinksTo.Position.X;
+                                x = (x + x2) / 2;
+                            }
                             n.Position = new Point()
                             {
-                                X = lastX + (int)(n.NodeSize.Width + n.NodeSize.Width * 0.5f),
+                                X = x,
                                 Y = n.Position.Y
                             };
-                            lastX = n.Position.X;
                         }
-                    }
-                }
-
-                foreach (var n in lanes[0])
-                {
-                    ConditionNode cnd = n as ConditionNode;
-                    if (cnd.LinksTo.Count > 0 && cnd.LinksTo[0].LinksTo != null && ((ConditionNode)cnd.LinksTo[0].LinksTo).LinksTo.Count > 0)
-                    {
-                        int x = cnd.LinksTo[0].LinksTo.Position.X;
-                        if (cnd.LinksTo.Count < this.SubsPerLine)
-                        {
-                            int x2 = cnd.LinksTo[cnd.LinksTo.Count - 1].LinksTo.Position.X;
-                            x = (x + x2) / 2;
-                        }
-                        else
-                        {
-                            int x2 = cnd.LinksTo[SubsPerLine - 1].LinksTo.Position.X;
-                            x = (x + x2) / 2;
-                        }
-                        n.Position = new Point()
-                        {
-                            X = x,
-                            Y = n.Position.Y
-                        };
                     }
                 }
 
