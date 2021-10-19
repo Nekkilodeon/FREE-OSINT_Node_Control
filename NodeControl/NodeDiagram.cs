@@ -1273,8 +1273,12 @@ namespace NodeControl
                     diagramEventArgs.SelectedObjects = SelectedObjects;
                     foreach (Node node in SelectedObjects)
                     {
-                        ConditionNode cond_node = node as ConditionNode;
-                        cond_node.Container_color = selected_color;
+                        if (node != null)
+                        {
+                            ConditionNode cond_node = node as ConditionNode;
+                            cond_node.Container_color = selected_color;
+                        }
+                            
                     }
                     Redraw();
                     diagramEventArgs.operation_attribute = selected_color;
