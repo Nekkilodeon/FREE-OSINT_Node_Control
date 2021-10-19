@@ -26,7 +26,7 @@ namespace NodeControl.Factories
         }
         public override Node CreateNode(NodeDiagram diagram)
         {
-            return new ConditionNode(diagram, Color.Cyan, false);
+            return new ConditionNode(diagram, Color.DeepSkyBlue, false);
         }
     }
 }

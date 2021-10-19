@@ -49,10 +49,10 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.35294F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 77.64706F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(827, 380);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(448, 300);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // txtText
@@ -62,13 +62,13 @@
             this.txtText.Margin = new System.Windows.Forms.Padding(4);
             this.txtText.Multiline = true;
             this.txtText.Name = "txtText";
-            this.txtText.Size = new System.Drawing.Size(819, 162);
+            this.txtText.Size = new System.Drawing.Size(440, 50);
             this.txtText.TabIndex = 0;
             // 
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(723, 348);
+            this.btnOK.Location = new System.Drawing.Point(344, 268);
             this.btnOK.Margin = new System.Windows.Forms.Padding(4);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(100, 28);
@@ -81,11 +81,11 @@
             // 
             this.groupBox1.Controls.Add(this.txtConditions);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(4, 174);
+            this.groupBox1.Location = new System.Drawing.Point(4, 62);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(819, 162);
+            this.groupBox1.Size = new System.Drawing.Size(440, 194);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Sub Nodes (1 per line)";
@@ -97,19 +97,20 @@
             this.txtConditions.Margin = new System.Windows.Forms.Padding(4);
             this.txtConditions.Multiline = true;
             this.txtConditions.Name = "txtConditions";
-            this.txtConditions.Size = new System.Drawing.Size(811, 139);
+            this.txtConditions.Size = new System.Drawing.Size(432, 171);
             this.txtConditions.TabIndex = 1;
             // 
             // ConditionNodeEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 380);
+            this.ClientSize = new System.Drawing.Size(448, 300);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ConditionNodeEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Node Editor";
+            this.Text = "Edit";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);

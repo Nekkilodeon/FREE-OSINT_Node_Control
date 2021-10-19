@@ -22,7 +22,7 @@ namespace NodeControlTest
             d.Dock = DockStyle.Fill;
             pnl.Controls.Add(d);
 
-            var n = new ConditionNode(d, Color.Aqua, false) { Text = "Test" };
+            var n = new ConditionNode(d, Color.DeepSkyBlue, false) { Text = "Test" };
 
             var subn = new ConditionNode(d, Color.Orange, true) { Text = "I NEED A LOT OF TEXT TO TEST THE FUNCTIONALITY" };
             subn.LinksTo.Add(new Condition() { Text = "", LinksTo = n });
@@ -30,7 +30,7 @@ namespace NodeControlTest
             subn.LinksTo.Add(new Condition() { Text = "Yes"});
 
 
-            var noNode = new ConditionNode(d, Color.Aqua, false) { Text = "Your loss" };
+            var noNode = new ConditionNode(d, Color.DeepSkyBlue, false) { Text = "Your loss" };
 
             subn.LinksTo.Add(new Condition() { Text = "No", LinksTo = noNode });
 
